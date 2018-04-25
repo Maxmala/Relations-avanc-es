@@ -1,0 +1,326 @@
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (106.3ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[35m (100.7ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateDoctors (20180425130029)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.5ms)[0m  [1m[35mCREATE TABLE "doctors" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "first_name" varchar, "last_name" varchar, "specialty" varchar, "postal_code" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20180425130029"]]
+  [1m[35m (110.9ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreatePatients (20180425130521)
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE TABLE "patients" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "first_name" varchar, "last_name" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20180425130521"]]
+  [1m[35m (124.1ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateAppointments (20180425130714)
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateAppointments (20180425130714)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE TABLE "appointments" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "date" datetime, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20180425130714"]]
+  [1m[35m (105.4ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.5ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "development"], ["created_at", "2018-04-25 13:21:03.712131"], ["updated_at", "2018-04-25 13:21:03.712131"]]
+  [1m[35m (76.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to AddPatientDoctorToAppointments (20180425134002)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (1.2ms)[0m  [1m[35mALTER TABLE "appointments" ADD "patient_id" integer[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_appointments_on_patient_id" ON "appointments" ("patient_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mALTER TABLE "appointments" ADD "doctor_id" integer[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_appointments_on_patient_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_appointments_on_patient_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_appointments_on_doctor_id" ON "appointments" ("doctor_id")[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20180425134002"]]
+  [1m[35m (104.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.5ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_appointments_on_doctor_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_appointments_on_doctor_id' AND type='index'
+[0m
+  [1m[35m (0.2ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_appointments_on_patient_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_appointments_on_patient_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "doctors" ("first_name", "last_name", "specialty", "postal_code", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["first_name", "Mickey"], ["last_name", "House"], ["specialty", "geriatrie"], ["postal_code", 13008], ["created_at", "2018-04-25 14:16:45.072171"], ["updated_at", "2018-04-25 14:16:45.072171"]]
+  [1m[35m (61.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to AddPatientDoctorToAppointments (20180425134002)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TEMPORARY TABLE "aappointments" ("id" integer NOT NULL PRIMARY KEY, "date" datetime DEFAULT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "patient_id" integer DEFAULT NULL, "doctor_id" integer DEFAULT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_appointments_on_doctor_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_appointments_on_doctor_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_appointments_on_patient_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_appointments_on_patient_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "tindex_aappointments_on_doctor_id" ON "aappointments" ("doctor_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "tindex_aappointments_on_patient_id" ON "aappointments" ("patient_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "aappointments" ("id","date","created_at","updated_at","patient_id","doctor_id")
+                     SELECT "id","date","created_at","updated_at","patient_id","doctor_id" FROM "appointments"[0m
+  [1m[35m (1.1ms)[0m  [1m[35mDROP TABLE "appointments"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "appointments" ("id" integer NOT NULL PRIMARY KEY, "date" datetime DEFAULT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "patient_id" integer DEFAULT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='tindex_aappointments_on_patient_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='tindex_aappointments_on_patient_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='tindex_aappointments_on_doctor_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='tindex_aappointments_on_doctor_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_appointments_on_patient_id" ON "appointments" ("patient_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "appointments" ("id","date","created_at","updated_at","patient_id")
+                     SELECT "id","date","created_at","updated_at","patient_id" FROM "aappointments"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE "aappointments"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TEMPORARY TABLE "aappointments" ("id" integer NOT NULL PRIMARY KEY, "date" datetime DEFAULT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "patient_id" integer DEFAULT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_appointments_on_patient_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_appointments_on_patient_id' AND type='index'
+[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE  INDEX "tindex_aappointments_on_patient_id" ON "aappointments" ("patient_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "aappointments" ("id","date","created_at","updated_at","patient_id")
+                     SELECT "id","date","created_at","updated_at","patient_id" FROM "appointments"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE "appointments"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "appointments" ("id" integer NOT NULL PRIMARY KEY, "date" datetime DEFAULT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.2ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='tindex_aappointments_on_patient_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='tindex_aappointments_on_patient_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "appointments" ("id","date","created_at","updated_at")
+                     SELECT "id","date","created_at","updated_at" FROM "aappointments"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "aappointments"[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[31mDELETE FROM "schema_migrations" WHERE "schema_migrations"."version" = ?[0m  [["version", "20180425134002"]]
+  [1m[35m (70.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to AddPatientDoctorToAppointments (20180425134002)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (1.0ms)[0m  [1m[35mALTER TABLE "appointments" ADD "patient_id" integer[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_appointments_on_patient_id" ON "appointments" ("patient_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mALTER TABLE "appointments" ADD "doctor_id" integer[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_appointments_on_patient_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_appointments_on_patient_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_appointments_on_doctor_id" ON "appointments" ("doctor_id")[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20180425134002"]]
+  [1m[35m (80.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_appointments_on_doctor_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_appointments_on_doctor_id' AND type='index'
+[0m
+  [1m[35m (0.2ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_appointments_on_patient_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_appointments_on_patient_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "doctors" ("first_name", "last_name", "specialty", "postal_code", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["first_name", "Mamour"], ["last_name", "Folle"], ["specialty", "Genyco"], ["postal_code", 13007], ["created_at", "2018-04-25 14:23:17.150329"], ["updated_at", "2018-04-25 14:23:17.150329"]]
+  [1m[35m (78.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.5ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (1.6ms)[0m  [1m[32mINSERT INTO "doctors" ("first_name", "last_name", "specialty", "postal_code", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["first_name", "Allo"], ["last_name", "Bobo"], ["specialty", "Urgence"], ["postal_code", 13010], ["created_at", "2018-04-25 14:24:03.602344"], ["updated_at", "2018-04-25 14:24:03.602344"]]
+  [1m[35m (76.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to AddPatientDoctorToAppointments (20180425134002)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TEMPORARY TABLE "aappointments" ("id" integer NOT NULL PRIMARY KEY, "date" datetime DEFAULT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "patient_id" integer DEFAULT NULL, "doctor_id" integer DEFAULT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_appointments_on_doctor_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_appointments_on_doctor_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_appointments_on_patient_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_appointments_on_patient_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "tindex_aappointments_on_doctor_id" ON "aappointments" ("doctor_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "tindex_aappointments_on_patient_id" ON "aappointments" ("patient_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "aappointments" ("id","date","created_at","updated_at","patient_id","doctor_id")
+                     SELECT "id","date","created_at","updated_at","patient_id","doctor_id" FROM "appointments"[0m
+  [1m[35m (0.9ms)[0m  [1m[35mDROP TABLE "appointments"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "appointments" ("id" integer NOT NULL PRIMARY KEY, "date" datetime DEFAULT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "patient_id" integer DEFAULT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='tindex_aappointments_on_patient_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='tindex_aappointments_on_patient_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='tindex_aappointments_on_doctor_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='tindex_aappointments_on_doctor_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_appointments_on_patient_id" ON "appointments" ("patient_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "appointments" ("id","date","created_at","updated_at","patient_id")
+                     SELECT "id","date","created_at","updated_at","patient_id" FROM "aappointments"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE "aappointments"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TEMPORARY TABLE "aappointments" ("id" integer NOT NULL PRIMARY KEY, "date" datetime DEFAULT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "patient_id" integer DEFAULT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_appointments_on_patient_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_appointments_on_patient_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "tindex_aappointments_on_patient_id" ON "aappointments" ("patient_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "aappointments" ("id","date","created_at","updated_at","patient_id")
+                     SELECT "id","date","created_at","updated_at","patient_id" FROM "appointments"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE "appointments"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "appointments" ("id" integer NOT NULL PRIMARY KEY, "date" datetime DEFAULT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='tindex_aappointments_on_patient_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='tindex_aappointments_on_patient_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "appointments" ("id","date","created_at","updated_at")
+                     SELECT "id","date","created_at","updated_at" FROM "aappointments"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "aappointments"[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[31mDELETE FROM "schema_migrations" WHERE "schema_migrations"."version" = ?[0m  [["version", "20180425134002"]]
+  [1m[35m (76.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to AddPatientDoctorToAppointments (20180425134002)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (1.0ms)[0m  [1m[35mALTER TABLE "appointments" ADD "patient_id" integer[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE  INDEX "index_appointments_on_patient_id" ON "appointments" ("patient_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mALTER TABLE "appointments" ADD "doctor_id" integer[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_appointments_on_patient_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_appointments_on_patient_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_appointments_on_doctor_id" ON "appointments" ("doctor_id")[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20180425134002"]]
+  [1m[35m (71.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.3ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_appointments_on_doctor_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_appointments_on_doctor_id' AND type='index'
+[0m
+  [1m[35m (0.4ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_appointments_on_patient_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_appointments_on_patient_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "patients" ("first_name", "last_name", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["first_name", "david"], ["last_name", "Douillette"], ["created_at", "2018-04-25 14:30:00.894756"], ["updated_at", "2018-04-25 14:30:00.894756"]]
+  [1m[35m (83.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (1.3ms)[0m  [1m[32mINSERT INTO "patients" ("first_name", "last_name", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["first_name", "Jerome"], ["last_name", "Lablague"], ["created_at", "2018-04-25 14:30:19.607586"], ["updated_at", "2018-04-25 14:30:19.607586"]]
+  [1m[35m (71.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.6ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (1.4ms)[0m  [1m[32mINSERT INTO "patients" ("first_name", "last_name", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["first_name", "jull"], ["last_name", "Malauxoreilles"], ["created_at", "2018-04-25 14:30:47.462162"], ["updated_at", "2018-04-25 14:30:47.462162"]]
+  [1m[35m (72.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mDoctor Load (0.2ms)[0m  [1m[34mSELECT  "doctors".* FROM "doctors" WHERE "doctors"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mPatient Load (0.1ms)[0m  [1m[34mSELECT  "patients".* FROM "patients" WHERE "patients"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "appointments" ("date", "created_at", "updated_at", "patient_id", "doctor_id") VALUES (?, ?, ?, ?, ?)[0m  [["date", "2018-04-28 10:30:00"], ["created_at", "2018-04-25 14:41:22.113491"], ["updated_at", "2018-04-25 14:41:22.113491"], ["patient_id", 2], ["doctor_id", 1]]
+  [1m[35m (78.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.4ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mDoctor Load (0.4ms)[0m  [1m[34mSELECT  "doctors".* FROM "doctors" WHERE "doctors"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mPatient Load (0.4ms)[0m  [1m[34mSELECT  "patients".* FROM "patients" WHERE "patients"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35mSQL (1.8ms)[0m  [1m[32mINSERT INTO "appointments" ("date", "created_at", "updated_at", "patient_id", "doctor_id") VALUES (?, ?, ?, ?, ?)[0m  [["date", "2018-08-28 23:59:00"], ["created_at", "2018-04-25 14:43:29.858984"], ["updated_at", "2018-04-25 14:43:29.858984"], ["patient_id", 2], ["doctor_id", 2]]
+  [1m[35m (65.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.4ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mDoctor Load (0.7ms)[0m  [1m[34mSELECT  "doctors".* FROM "doctors" WHERE "doctors"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mPatient Load (0.3ms)[0m  [1m[34mSELECT  "patients".* FROM "patients" WHERE "patients"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (1.8ms)[0m  [1m[32mINSERT INTO "appointments" ("date", "created_at", "updated_at", "patient_id", "doctor_id") VALUES (?, ?, ?, ?, ?)[0m  [["date", "2018-08-27 12:15:00"], ["created_at", "2018-04-25 14:44:02.835092"], ["updated_at", "2018-04-25 14:44:02.835092"], ["patient_id", 1], ["doctor_id", 3]]
+  [1m[35m (79.0ms)[0m  [1m[36mcommit transaction[0m
